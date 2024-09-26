@@ -6,16 +6,8 @@ import { setupCounter } from './counter.js'
 //This is to import jquery
 import $ from 'jquery'
 
-$("#app").html(`
-    <div>
-        <div class="card">
-            <h2 id="headerText" class="cardText"></h2>
-            <button id="changeTextBtn" class="myBtn"></button>
-        </div>
-    </div>
-`)
-
-document.querySelector('#app').innerHTML = `
+let defaultPage = 
+`
   <div>
     <a href="https://vitejs.dev" target="_blank">
       <img src="${viteLogo}" class="logo" alt="Vite logo" />
@@ -33,4 +25,6 @@ document.querySelector('#app').innerHTML = `
   </div>
 `
 
-setupCounter(document.querySelector('#counter'))
+$("#app").html(defaultPage)
+
+setupCounter($('#counter'))
