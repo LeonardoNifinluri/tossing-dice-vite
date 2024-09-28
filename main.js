@@ -12,6 +12,10 @@ let dicePage = `
     <section id="tossSection">
         <div class="headerTitle">
             <h1>CRAPS</h1>
+            <div class="identity">
+              <p>Created By Leonardo Alilyamin Nifinluri</p>
+              <p>D121221020</p>
+            </div>
         </div>
         <div class="diceNumbers">
             <div id="dice1" class="dice">D</div>

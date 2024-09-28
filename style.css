@@ -66,3 +66,7 @@ body{
   margin: 0 auto; /* Center the div horizontally */
   padding: 128px; /* Optional: add some padding */
 }
+
+.identity{
+  padding: 16px;
+}
