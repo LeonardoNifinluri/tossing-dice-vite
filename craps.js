@@ -1,16 +1,12 @@
-function roll(dice1, dice2, bet){
+function roll(){
     //generate number for dice1 and dice2 in range [1,6]
     let d1 = Math.floor((Math.random() * 6) + 1)
     let d2 = Math.floor((Math.random() * 6) + 1)
-    dice1.text(d1)
-    dice2.text(d2)
-    setTimeout(() => {
-        let message = (bet == d1 + d2) ? 'You Win' : 'You Lose';
-        alert(message);
-    }, 10); // Small delay to allow text update
+    
+    return [d1, d2, d1 + d2]
 }
 
-const setupCraps = (diceElements, buttons) => {
+const setupCraps = (diceElements, buttons, histogram) => {
     //diceElement and buttons array of elements
 
     //for diceElement:
@@ -24,49 +20,25 @@ const setupCraps = (diceElements, buttons) => {
     ...
     10 -> btn12
     */
-    buttons[0].click(() => {
-        roll(dice1, dice2, 2)
+
+    buttons.forEach((button, index) => {
+        button.click(() => {
+            const result = roll()
+            dice1.text(result[0])
+            dice2.text(result[1])
+            
+            // setTimeout(() => {
+            //     let message = (index + 2 == result[2]) ? 'You Win' : 'You Lose';
+            //     message += `\nbet: ${index + 2}\noccurs: ${result[2]}`
+            //     alert(message);
+            // }, 10) // Small delay to allow text update
+
+            //update the histogram
+            histogram.data.datasets[0].data[result[2] - 2]++;
+            histogram.update()
+        })
     })
 
-    buttons[1].click(() => {
-        roll(dice1, dice2, 3)
-    })
-
-    buttons[2].click(() => {
-        roll(dice1, dice2, 4)
-    })
-
-    buttons[3].click(() => {
-        roll(dice1, dice2, 5)
-    })
-
-    buttons[4].click(() => {
-        roll(dice1, dice2, 6)
-    })
-
-    buttons[5].click(() => {
-        roll(dice1, dice2, 7)
-    })
-
-    buttons[6].click(() => {
-        roll(dice1, dice2, 8)
-    })
-
-    buttons[7].click(() => {
-        roll(dice1, dice2, 9)
-    })
-
-    buttons[8].click(() => {
-        roll(dice1, dice2, 10)
-    })
-
-    buttons[9].click(() => {
-        roll(dice1, dice2, 11)
-    })
-
-    buttons[10].click(() => {
-        roll(dice1, dice2, 12)
-    })
 }
 
 export {setupCraps}

@@ -3,10 +3,10 @@ import './style.css'
 //This is to import jquery (download using npm install jquery)
 import $ from 'jquery'
 
-//This is to import chart.js
-import { Chart } from 'chart.js'
-
 import { setupCraps } from './craps'
+
+import Chart from 'chart.js/auto'
+
 let dicePage = `
 <div>
     <section id="tossSection">
@@ -43,8 +43,8 @@ let dicePage = `
 </div>
 `
 $("#app").html(dicePage)
-let dice = [$('#dice1'), $('#dice2')]
-let buttons = [
+const dice = [$('#dice1'), $('#dice2')]
+const buttons = [
     $('#button2'),
     $('#button3'),
     $('#button4'),
@@ -57,77 +57,74 @@ let buttons = [
     $('#button11'),
     $('#button12')
 ]
-setupCraps(dice, buttons)
-// const ctx = document.getElementById('myHistogram').getContext('2d');
 
-// const data = {
-//     labels: ['2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'], //single value
-//     datasets: [{
-//         label: 'FRQUENCY',  // Label for the histogram
-//         data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], // Frequency of data in each bin
-//         backgroundColor: '#ffffff', // Bar color
-//         borderWidth: 2
-//     }]
-// };
+/*
+what i've done : 
+instead of create the histogram in the craps.js, i create the object of histogram in main.js
+why? cause many reason. 
+Efficient to pass the object : JS pass by reference
+*/
+
+// const ctx = document.getElementById('myHistogram').getContext('2d')
+const ctx = $('#myHistogram').get(0).getContext('2d')
+
+const data = {
+    labels: ['2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+    datasets: [{
+      label: 'FREQUENCY',
+      data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      backgroundColor: '#ffffff',
+      borderWidth: 2
+    }]
+}
+
+const config = {
+    type: 'bar',
+    data: data,
+    options: {
+      scales: {
+        x: {
+          title: {
+            display: false,
+            text: 'Values',
+            color: '#ffffff'
+          },
+          ticks: {
+            color: '#ffffff',
+            font: {
+              size: 14
+            }
+          },
+          grid: {
+            color: '#121212'
+          }
+        },
+        y: {
+          title: {
+            display: false,
+            text: 'Frequency',
+            color: '#ffffff'
+          },
+          ticks: {
+            display: false,
+            color: '#ffffff',
+            font: {
+              size: 14
+            }
+          },
+          grid: {
+            color: '#121212'
+          },
+          beginAtZero: true
+        }
+      }
+    }
+  }
+
+  const myChart = new Chart(ctx, config)
 
 
-// //this is how to access the datasets
-// //console.log(data['datasets'][0]['data'][2])
-
-// const config = {
-//     type: 'bar',  // Type of chart
-//     data: data,
-//     options: {
-//         scales: {
-//             x: {
-//                 title: {
-//                     display: false,
-//                     text: 'Values',  // X-axis label
-//                     color: '#ffffff'
-//                 },
-//                 ticks: {
-//                 color: '#ffffff',
-//                 font: {
-//                     size: 14
-//                 }
-//                 },
-//                 grid: {
-//                 color: '#121212'
-//                 }
-//             },
-//             y: {
-//                 title: {
-//                     display: false,
-//                     text: 'Frequency',  // Y-axis label
-//                     color: '#ffffff'
-//                 },
-//                 ticks: {
-//                 display: false,
-//                 color: '#ffffff',
-//                 font: {
-//                     size: 14
-//                 }
-//                 },
-//                 grid: {
-//                 color: '#121212'
-//                 },
-//                 beginAtZero: true
-//             }
-//         }
-//     }
-// };
-
-// const myChart = new Chart(ctx, config)
-// document.getElementById("button2").addEventListener("click", function() {
-//     data['datasets'][0]['data'][0]++
-//     console.log(data['datasets'][0]['data'][0])
-//     myChart.update()
-// });
-// document.getElementById("button3").addEventListener("click", function() {
-//     data['datasets'][0]['data'][1]++
-//     console.log(data['datasets'][0]['data'][1])
-//     myChart.update()
-// });
+setupCraps(dice, buttons, myChart)
 
 
 
